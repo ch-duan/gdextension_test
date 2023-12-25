@@ -1,0 +1,9 @@
+[submodule "lib/godot-cpp"]
+	path = lib/godot-cpp
+	url = git@github.com:godotengine/godot-cpp.git
+[submodule "lib/QB2_protocol"]
+	path = lib/QB2_protocol
+	url = https://git.quantumbeauty.group/ES_QB2/QB2_protocol_parser.git
+[submodule "lib/net_pack"]
+	path = lib/net_pack
+	url = https://git.quantumbeauty.group/ES_QB2/net_pack.git

@@ -1,0 +1,228 @@
+cmake_minimum_required(VERSION 3.6)
+project(QB2AICore)
+
+set(GODOT_GDEXTENSION_DIR lib/godot-cpp/gdextension/ CACHE STRING "Path to GDExtension interface header directory")
+set(CPP_BINDINGS_PATH lib/godot-cpp CACHE STRING "Path to C++ bindings")
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+# if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+# set(TARGET_PATH x11)
+# elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+# set(TARGET_PATH win64)
+# elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+# set(TARGET_PATH macos)
+# else()
+# message(FATAL_ERROR "Not implemented support for ${CMAKE_SYSTEM_NAME}")
+# endif()
+
+# Change the output directory to the bin directory
+set(BUILD_PATH ${CMAKE_SOURCE_DIR}/bin)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${BUILD_PATH}")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${BUILD_PATH}")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${BUILD_PATH}")
+SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG "${BUILD_PATH}")
+SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "${BUILD_PATH}")
+SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG "${BUILD_PATH}")
+SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE "${BUILD_PATH}")
+SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${BUILD_PATH}")
+SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${BUILD_PATH}")
+set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/)
+
+# Set the c++ standard to c++17
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+set(GODOT_COMPILE_FLAGS)
+set(GODOT_LINKER_FLAGS)
+
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+	# using Visual Studio C++
+	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} /EHsc /WX") # /GF /MP
+	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} /DTYPED_METHOD_BIND")
+
+	if(CMAKE_BUILD_TYPE MATCHES Debug)
+		set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} /MDd") # /Od /RTC1 /Zi
+	else()
+		set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} /MD /O2") # /Oy /GL /Gy
+		STRING(REGEX REPLACE "/RTC(su|[1su])" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+		string(REPLACE "/RTC1" "" CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG})
+	endif(CMAKE_BUILD_TYPE MATCHES Debug)
+
+	# Disable conversion warning, truncation, unreferenced var, signed mismatch
+	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} /wd4244 /wd4305 /wd4101 /wd4018 /wd4267 /wd4819 /wd4473")
+
+	add_definitions(-DNOMINMAX)
+
+# Unkomment for warning level 4
+# if(CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
+# string(REGEX REPLACE "/W[0-4]" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+# endif()
+else()
+	add_definitions(-DNOMINMAX)
+
+	# elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+	# using Clang
+	# elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+	# using GCC and maybe MinGW?
+	# set(GODOT_LINKER_FLAGS "-static-libgcc -static-libstdc++ -Wl")
+
+	# set(GODOT_LINKER_FLAGS "-static-libgcc -static-libstdc++ -Wl,-R,'$$ORIGIN'")
+
+	# Hmm.. maybe to strikt?
+	set(GODOT_COMPILE_FLAGS "-fPIC -g -Wwrite-strings")
+	set(GODOT_COMPILE_FLAGS "-g -Wwrite-strings")
+
+	# set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wchar-subscripts -Wcomment -Wdisabled-optimization")
+	# set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wformat -Wformat=2 -Wformat-security -Wformat-y2k")
+	# set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wimport -Winit-self -Winline -Winvalid-pch -Werror")
+	# set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wmissing-braces -Wmissing-format-attribute")
+	# set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wmissing-include-dirs -Wmissing-noreturn -Wpacked -Wpointer-arith")
+	# set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wredundant-decls -Wreturn-type -Wsequence-point")
+	# set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wswitch -Wswitch-enum -Wtrigraphs")
+	# set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wuninitialized -Wunknown-pragmas -Wunreachable-code -Wunused-label")
+	# set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wunused-value -Wvariadic-macros -Wvolatile-register-var -Wno-error=attributes")
+
+	# -Wshadow -Wextra -Wall -Weffc++ -Wfloat-equal -Wstack-protector -Wunused-parameter -Wsign-compare -Wunused-variable -Wcast-align
+	# -Wunused-function -Wstrict-aliasing -Wstrict-aliasing=2 -Wmissing-field-initializers
+	if(NOT CMAKE_SYSTEM_NAME STREQUAL "Android")
+		set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wno-ignored-attributes")
+	endif()
+
+	if(CMAKE_BUILD_TYPE MATCHES Debug)
+		set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -fno-omit-frame-pointer -O0")
+	else()
+		set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -O3")
+	endif(CMAKE_BUILD_TYPE MATCHES Debug)
+endif()
+
+# Get Sources
+file(GLOB_RECURSE SOURCES
+	"src/*.c**")
+
+file(GLOB_RECURSE HEADERS "src/*.h**")
+
+# Define our godot-cpp library
+add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADERS})
+
+target_include_directories(${PROJECT_NAME} SYSTEM
+	PRIVATE
+	src
+	${CPP_BINDINGS_PATH}/include
+	${CPP_BINDINGS_PATH}/include/godot_cpp
+	${CPP_BINDINGS_PATH}/gen/include
+	${CPP_BINDINGS_PATH}/gen/include/godot_cpp
+	${GODOT_GDEXTENSION_DIR}
+)
+
+# Create the correct name (godot.os.build_type.system_bits)
+# Synchronized with godot-cpp's CMakeLists.txt
+set(BITS 32)
+
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+	set(BITS x86_64)
+endif(CMAKE_SIZEOF_VOID_P EQUAL 8)
+
+if(CMAKE_BUILD_TYPE MATCHES Debug)
+	set(GODOT_CPP_BUILD_TYPE template_debug)
+else()
+	set(GODOT_CPP_BUILD_TYPE template_debug)
+endif()
+
+string(TOLOWER ${CMAKE_SYSTEM_NAME} SYSTEM_NAME)
+string(TOLOWER ${GODOT_CPP_BUILD_TYPE} BUILD_TYPE)
+
+set(TARGET_LINK_LIBS)
+
+set(Link_dir)
+
+if(PLATFORM STREQUAL Android)
+endif()
+
+if(ANDROID)
+	add_definitions(-DPLATFORM_ANDROID=1)
+	add_definitions(-DUSE_ANDROID_LOG)
+	set(SYSTEM_NAME ${SYSTEM_NAME}.${ANDROID_ABI})
+	set(ANDROID_NDK_INCLUDE $ENV{ANDROID_NDK})
+	message("this android platform $ENV{ANDROID_NDK}")
+	include_directories($ENV{ANDROID_NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/c++/v1)
+	include_directories($ENV{ANDROID_NDK}/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include)
+	include_directories($ENV{ANDROID_NDK}/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/14.0.7/include)
+	message("this is win64 platform")
+	list(APPEND TARGET_LINK_LIBS log)
+
+	# set(OPENCV_PATH "D:/env/opencv/OpenCV-android-sdk")
+	# set(OpenCV_DIR ${OPENCV_PATH}/sdk/native/jni)
+	# find_package(OpenCV REQUIRED PATHS ${OpenCV_DIR})
+endif()
+
+if(WIN32)
+	# set(OPENCV_PATH $ENV{opencv_path})
+	# message("opencv is ${OPENCV_PATH}")
+	message("this is win64 platform")
+
+	# target_link_directories(${PROJECT_NAME} PRIVATE $ENV{LLVM_UCRT}/x86_64-w64-mingw32/lib)
+	list(APPEND TARGET_LINK_LIBS ws2_32)
+
+	# list(APPEND Link_dir ${OPENCV_PATH}/x64/x64/vc16/staticlib)
+	# include_directories(${OPENCV_PATH}/x64/include)
+endif()
+
+# if(CMAKE_VERSION VERSION_GREATER "3.13")
+target_link_directories(${PROJECT_NAME}
+	PRIVATE
+	lib/bin
+	lib/godot-cpp/bin
+	${Link_dir}
+)
+
+if(PLATFORM STREQUAL OS64)
+	add_definitions(-DMACOS)
+	message("this is macos platform")
+endif()
+
+if(PLATFORM STREQUAL Android)
+	list(APPEND Target_link_libs libgodot-cpp.android.${BUILD_TYPE}.arm64v8.a)
+elseif(PLATFORM STREQUAL OS64)
+	list(APPEND Target_link_libs libgodot-cpp.${SYSTEM_NAME}.${BUILD_TYPE}.arm64.a
+	)
+else()
+	list(APPEND Target_link_libs libgodot-cpp.${SYSTEM_NAME}.${BUILD_TYPE}.${BITS}.lib)
+endif()
+
+message("link lib is ${Target_link_libs}")
+target_link_libraries(${PROJECT_NAME}
+
+	# libgodot-cpp.${SYSTEM_NAME}.${BUILD_TYPE}$<$<NOT:$<PLATFORM_ID:Android>>:.${BITS}>
+	${TARGET_LINK_LIBS}
+)
+
+# else()
+# target_link_libraries(${PROJECT_NAME}
+# ${CPP_BINDINGS_PATH}/bin/libgodot-cpp.${SYSTEM_NAME}.${BUILD_TYPE}$<$<NOT:$<PLATFORM_ID:Android>>:.${BITS}>.a
+# ${TARGET_LINK_LIBS}
+# )
+# endif()
+string(TOLOWER "${CMAKE_SYSTEM_NAME}" SYSTEM_NAME)
+string(TOLOWER "${CMAKE_BUILD_TYPE}" BUILD_TYPE)
+
+# Add the compile flags
+set_property(TARGET ${PROJECT_NAME} APPEND_STRING PROPERTY COMPILE_FLAGS ${GODOT_COMPILE_FLAGS})
+set_property(TARGET ${PROJECT_NAME} APPEND_STRING PROPERTY LINK_FLAGS ${GODOT_LINKER_FLAGS})
+
+if(ANDROID)
+	# Added the android abi after system name
+	set(SYSTEM_NAME ${SYSTEM_NAME}.${ANDROID_ABI})
+
+	# Android does not have the bits at the end if you look at the main godot repo build
+	set_property(TARGET ${PROJECT_NAME} PROPERTY OUTPUT_NAME "${PROJECT_NAME}.${SYSTEM_NAME}.${BUILD_TYPE}")
+else()
+	set_property(TARGET ${PROJECT_NAME} PROPERTY OUTPUT_NAME "${PROJECT_NAME}.${SYSTEM_NAME}.${BUILD_TYPE}.${BITS}")
+endif()
+
+install(TARGETS ${PROJECT_NAME} DESTINATION lib/bin)
+
+install(TARGETS ${PROJECT_NAME} DESTINATION D:/ch/code/godot/qb_app_godot/addons/QBCore)
+
+# install(TARGETS ${PROJECT_NAME} DESTINATION /mnt/hgfs/vm_share)
+# install(TARGETS ${PROJECT_NAME} DESTINATION /mnt/hgfs/QBCore)

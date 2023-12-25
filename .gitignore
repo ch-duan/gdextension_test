@@ -1,0 +1,17 @@
+work
+build
+*.dylib
+*.so
+*.dll
+*.lib
+.DS_Store
+.mono
+.import
+iosexport
+.xmake
+.vscode
+*.o
+.cache
+*.pdb
+*.obj
+*.tmp

@@ -1,0 +1,54 @@
+[gd_scene load_steps=4 format=3 uid="uid://hujtfvuincb2"]
+
+[ext_resource type="PackedScene" uid="uid://6c1jivbxvlki" path="res://components/editor_nodo/editor_node.tscn" id="1_mepjj"]
+[ext_resource type="Script" path="res://editor/editor.gd" id="1_og1nf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oe27d"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="Editor" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+script = ExtResource("1_og1nf")
+metadata/_edit_use_anchors_ = true
+
+[node name="bg" type="Panel" parent="."]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_oe27d")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="bg"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="left" type="VBoxContainer" parent="bg/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="GraphNode" parent="bg/HBoxContainer/left" instance=ExtResource("1_mepjj")]
+layout_mode = 2
+
+[node name="GraphEdit" type="GraphEdit" parent="bg/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3

@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://6c1jivbxvlki"]
+
+[ext_resource type="Script" path="res://components/editor_nodo/editor_node.gd" id="1_4yj25"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sen3a"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.952941, 0.498039, 1)
+
+[node name="Panel" type="Panel"]
+custom_minimum_size = Vector2(60, 100)
+theme_override_styles/panel = SubResource("StyleBoxFlat_sen3a")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4yj25")
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "123"
+horizontal_alignment = 1
+vertical_alignment = 1
