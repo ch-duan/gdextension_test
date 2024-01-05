@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project id="1" name="s389" schema_version="1.0" crt= "2023-02-14 08:00:00" lut="2023-02-14 10:00:00">
+  <steps>
+    <step id="imageSource" module_id="imageSource" name="本地图片" number_in_project="1" number_in_module="1">
+      <inputs>
+        <std::string name="sourceType" value="file"/>
+        <std::string name="path" value="test_file/s1981-2.png"/>
+      </inputs>
+      <outputs>
+        <mat name="image"/>
+      </outputs>
+      <links>
+        <!-- <link direction="in"/> -->
+        <link direction="out" target="roi"/>
+      </links>
+    </step>
+    <step id="roi" module_id="roi" name="根据POI切图" number_in_project="2" number_in_module="1">
+      <inputs>
+        <rectangle name="roi">
+          <coordinate name="start" x="2140" y="1790"/>
+          <coordinate name="end" x="2640" y="1790"/>
+          <!-- <coordinate name="start" x="565" y="305"/>
+          <coordinate name="end" x="685" y="323"/> -->
+        </rectangle>
+        <reference name="image" ref_step="imageSource" ref_section="output" ref_name="image"/>
+      </inputs>
+      <outputs>
+        <mat name="roiImage"/>
+      </outputs>
+      <links>
+        <link direction="in" target="imageSource"/>
+        <link direction="out" target="circleFinder"/>
+        <link direction="out" target="topLineFinder"/>
+        <link direction="out" target="bottomLineFinder"/>
+        <link direction="out" target="leftLineFinder"/>
+        <link direction="out" target="rightLineFinder"/>
+      </links>
+    </step>
+    <!-- <step id="roi" module_id="roi" name="根据POI切图" number_in_project="2" number_in_module="1">
+      <inputs>
+        <rectangle name="roi">
+          <coordinate name="start" x="2140" y="1790"/>
+          <coordinate name="end" x="2640" y="1790"/>
+        </rectangle>
+        <reference name="image" ref_step="imageSource" ref_section="output" ref_name="image"/>
+      </inputs>
+      <outputs>
+        <mat name="roiImage"/>
+      </outputs>
+      <links>
+        <link direction="in" target="imageSource"/>
+        <link direction="out" target="circleFinder"/>
+        <link direction="out" target="lineFinder"/>
+      </links>
+    </step> -->
+
+    <step id="circleFinder" module_id="circleFinder" name="找圆" number_in_project="3" number_in_module="1">
+      <inputs>
+        <double name="minRadius" value="200"/>
+        <double name="path" value="300"/>
+        <reference name="image" ref_step="roi" ref_section="output" ref_name="image"/>
+      </inputs>
+      <outputs>
+        <coordinate name="center"/>
+        <mat name="image"/>
+      </outputs>
+      <links>
+        <link direction="in" target="roi"/>
+      </links>
+    </step>
+    <step id="topLineFinder" module_id="lineFinder" name="找上边线" number_in_project="4" number_in_module="1">
+      <!-- <inputs>
+        <line_caliper name="caliper">
+          <point_2d name="baselineStart" x="2060" y="580"/>
+          <point_2d name="baselineEnd" x="2760" y="550"/>
+          <int name="caliperLineLength" value="30"/>
+          <int name="caliperLineWidth" value="20"/>
+          <int name="caliperLineNo" value="20"/>
+          <int name="filterSize" value="2"/>
+          <int name="edgeThreshold" value="30"/>
+          <std::string name="searchDirection" value="1"/>
+          <std::string name="polarity" value="all"/>
+        </line_caliper>
+        <double name="minLength" value="10"/>
+        <boolean name="drawResult" value="true"/>
+        <reference name="image" ref_step="roi" ref_section="output" ref_name="image"/>
+      </inputs> -->
+      <inputs>
+        <line_caliper name="caliper">
+          <point_2d name="baselineStart" x="2060" y="580"/>
+          <point_2d name="baselineEnd" x="2760" y="550"/>
+          <int name="caliperLineLength" value="30"/>
+          <int name="caliperLineWidth" value="20"/>
+          <int name="caliperLineNo" value="20"/>
+          <int name="filterSize" value="2"/>
+          <int name="edgeThreshold" value="10"/>
+          <std::string name="searchDirection" value="1"/>
+          <std::string name="polarity" value="all"/>
+        </line_caliper>
+        <double name="minLength" value="10"/>
+        <boolean name="drawResult" value="true"/>
+        <reference name="image" ref_step="roi" ref_section="output" ref_name="image"/>
+      </inputs>
+      <outputs>
+        <lines name="lines"/>
+        <mat name="image"/>
+      </outputs>
+      <links>
+        <link direction="in" target="roi"/>
+      </links>
+    </step>
+    <step id="bottomLineFinder" module_id="lineFinder" name="找下边线" number_in_project="5" number_in_module="2">
+      <inputs>
+        <line_caliper name="caliper">
+          <point_2d name="baselineStart" x="2050" y="3000"/>
+          <point_2d name="baselineEnd" x="2787" y="3000"/>
+          <int name="caliperLineLength" value="30"/>
+          <int name="caliperLineWidth" value="20"/>
+          <int name="caliperLineNo" value="20"/>
+          <int name="filterSize" value="2"/>
+          <int name="edgeThreshold" value="10"/>
+          <std::string name="searchDirection" value="1"/>
+          <std::string name="polarity" value="all"/>
+        </line_caliper>
+        <double name="minLength" value="10"/>
+        <boolean name="drawResult" value="true"/>
+        <reference name="image" ref_step="roi" ref_section="output" ref_name="image"/>
+      </inputs>
+      <outputs>
+        <lines name="lines"/>
+        <mat name="image"/>
+      </outputs>
+      <links>
+        <link direction="in" target="roi"/>
+      </links>
+    </step>
+    <step id="leftLineFinder" module_id="lineFinder" name="找下边线" number_in_project="6" number_in_module="3">
+      <inputs>
+        <line_caliper name="caliper">
+          <point_2d name="baselineStart" x="1200" y="1200"/>
+          <point_2d name="baselineEnd" x="1200" y="2400"/>
+          <int name="caliperLineLength" value="30"/>
+          <int name="caliperLineWidth" value="20"/>
+          <int name="caliperLineNo" value="20"/>
+          <int name="filterSize" value="2"/>
+          <int name="edgeThreshold" value="10"/>
+          <std::string name="searchDirection" value="1"/>
+          <std::string name="polarity" value="all"/>
+          <array name="exclusion">
+            <point_2d name="baselineStart" x="978" y="1400"/>
+            <point_2d name="baselineStart" x="1392" y="1400"/>
+            <point_2d name="baselineStart" x="1392" y="2186"/>
+            <point_2d name="baselineStart" x="978" y="2186"/>
+          </array>
+        </line_caliper>
+        <double name="minLength" value="10"/>
+        <boolean name="drawResult" value="true"/>
+        <reference name="image" ref_step="roi" ref_section="output" ref_name="image"/>
+      </inputs>
+      <outputs>
+        <lines name="lines"/>
+        <mat name="image"/>
+      </outputs>
+      <links>
+        <link direction="in" target="roi"/>
+      </links>
+    </step>
+    <step id="rightLineFinder" module_id="lineFinder" name="找右边线" number_in_project="7" number_in_module="4">
+      <inputs>
+        <line_caliper name="caliper">
+          <point_2d name="baselineStart" x="3620" y="1190"/>
+          <point_2d name="baselineEnd" x="3620" y="2350"/>
+          <int name="caliperLineLength" value="30"/>
+          <int name="caliperLineWidth" value="20"/>
+          <int name="caliperLineNo" value="20"/>
+          <int name="filterSize" value="2"/>
+          <int name="edgeThreshold" value="10"/>
+          <std::string name="searchDirection" value="1"/>
+          <std::string name="polarity" value="all"/>
+          <!-- <array name="exclusion">
+            <point_2d name="baselineStart" x="978" y="1400"/>
+            <point_2d name="baselineStart" x="1392" y="1400"/>
+            <point_2d name="baselineStart" x="1392" y="2186"/>
+            <point_2d name="baselineStart" x="978" y="2186"/>
+          </array> -->
+        </line_caliper>
+        <double name="minLength" value="10"/>
+        <boolean name="drawResult" value="true"/>
+        <reference name="image" ref_step="roi" ref_section="output" ref_name="image"/>
+      </inputs>
+      <outputs>
+        <lines name="lines"/>
+        <mat name="image"/>
+      </outputs>
+      <links>
+        <link direction="in" target="roi"/>
+      </links>
+    </step>
+  </steps>
+</project>

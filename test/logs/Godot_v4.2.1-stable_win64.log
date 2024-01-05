@@ -1,0 +1,172 @@
+I0105 18:29:19.072 25732 dll_project.cpp:21] start execute project in API
+D0105 18:29:19.072 25732 project.cpp:27] working directory: 0x1ad92e599b0
+I0105 18:29:19.072 25732 project.cpp:30] project path: d:\code\c\gdextension_test\test_file\s1891.xml
+D0105 18:29:19.072 25732 engine.cpp:172] step id is empty, execute root step
+W0105 18:29:19.072 25732 engine.cpp:182] No step to be executed
+I0105 18:31:18.465 2820 dll_project.cpp:21] start execute project in API
+D0105 18:31:18.465 2820 project.cpp:27] working directory: 0x20a211a4ce0
+I0105 18:31:18.465 2820 project.cpp:30] project path: d:\code\c\gdextension_test\test_file\s1891.xml
+D0105 18:31:18.465 2820 engine.cpp:172] step id is empty, execute root step
+W0105 18:31:18.465 2820 engine.cpp:182] No step to be executed
+I0105 18:32:19.999 9348 dll_project.cpp:21] start execute project in API
+D0105 18:32:19.999 9348 project.cpp:27] working directory: 0x165503260b0
+I0105 18:32:19.999 9348 project.cpp:30] project path: d:\code\c\gdextension_test\test\test_file\s1891.xml
+D0105 18:32:19.999 9348 project.cpp:87] input: std::string	sourceType
+W0105 18:32:19.999 9348 project.cpp:106] no serializer defined for input: sourceType
+D0105 18:32:19.999 9348 project.cpp:87] input: std::string	path
+W0105 18:32:19.999 9348 project.cpp:106] no serializer defined for input: path
+D0105 18:32:19.999 9348 project.cpp:87] input: rectangle	roi
+D0105 18:32:19.999 9348 project.cpp:87] input: reference	image
+D0105 18:32:19.999 9348 project.cpp:87] input: double	minRadius
+D0105 18:32:19.999 9348 project.cpp:87] input: double	path
+D0105 18:32:19.999 9348 project.cpp:87] input: reference	image
+D0105 18:32:19.999 9348 project.cpp:87] input: line_caliper	caliper
+I0105 18:32:19.999 9348 md_line_finder.cpp:56] deserialize line calliper config
+D0105 18:32:19.999 9348 project.cpp:87] input: double	minLength
+D0105 18:32:19.999 9348 project.cpp:87] input: boolean	drawResult
+D0105 18:32:19.999 9348 project.cpp:87] input: reference	image
+D0105 18:32:19.999 9348 project.cpp:87] input: line_caliper	caliper
+I0105 18:32:19.999 9348 md_line_finder.cpp:56] deserialize line calliper config
+D0105 18:32:19.999 9348 project.cpp:87] input: double	minLength
+D0105 18:32:19.999 9348 project.cpp:87] input: boolean	drawResult
+D0105 18:32:19.999 9348 project.cpp:87] input: reference	image
+D0105 18:32:19.999 9348 project.cpp:87] input: line_caliper	caliper
+I0105 18:32:19.999 9348 md_line_finder.cpp:56] deserialize line calliper config
+D0105 18:32:19.999 9348 project.cpp:87] input: double	minLength
+D0105 18:32:19.999 9348 project.cpp:87] input: boolean	drawResult
+D0105 18:32:19.999 9348 project.cpp:87] input: reference	image
+D0105 18:32:19.999 9348 project.cpp:87] input: line_caliper	caliper
+I0105 18:32:19.999 9348 md_line_finder.cpp:56] deserialize line calliper config
+D0105 18:32:19.999 9348 project.cpp:87] input: double	minLength
+D0105 18:32:19.999 9348 project.cpp:87] input: boolean	drawResult
+D0105 18:32:19.999 9348 project.cpp:87] input: reference	image
+I0105 18:32:19.999 9348 project.cpp:193] root step is: 本地图片
+D0105 18:32:19.999 9348 engine.cpp:172] step id is empty, execute root step
+D0105 18:32:19.999 24720 engine.cpp:136] execute step asynchronized	imageSource	本地图片
+D0105 18:32:19.999 24720 module.cpp:134] input param class name: class InputParam, step id: imageSource
+D0105 18:32:19.999 24720 module.cpp:134] input param class name: class InputParam, step id: imageSource
+I0105 18:32:19.999 24720 module.cpp:150] execute step: 本地图片
+I0105 18:32:19.999 24720 md_image_source.cpp:46] execute MdImageSource
+I0105 18:32:19.999 24720 md_image_source.cpp:47] sourceType: file, path: ../../../../src/s1981-2.png
+I0105 18:32:19.999 24720 md_image_source.cpp:55] image file not exist: ../../../../src/s1981-2.png
+D0105 18:32:19.999 24720 engine.cpp:148] event signaled
+D0105 18:32:19.999 16648 engine.cpp:54] step executed signal received, done task count: 2
+I0105 18:32:19.999 16648 engine.cpp:57] step imageSource return 0
+D0105 18:32:19.999 16648 engine.cpp:54] step executed signal received, done task count: 1
+I0105 18:32:19.999 16648 engine.cpp:57] step imageSource return 0
+D0105 18:32:19.999 9616 engine.cpp:136] execute step asynchronized	roi	根据POI切图
+D0105 18:32:19.999 23584 engine.cpp:132] step is already been running: roi
+D0105 18:32:19.999 9616 module.cpp:134] input param class name: class RectangleParam, step id: roi
+D0105 18:32:19.999 9616 module.cpp:134] input param class name: class ReferenceParam, step id: roi
+I0105 18:32:19.999 9616 module.cpp:150] execute step: 根据POI切图
+I0105 18:32:19.999 9616 md_roi.cpp:25] execute ROI
+W0105 18:32:19.999 9616 md_roi.cpp:28] empty input image, step id: roi
+D0105 18:32:19.999 9616 engine.cpp:148] event signaled
+D0105 18:32:19.999 16648 engine.cpp:54] step executed signal received, done task count: 2
+I0105 18:32:19.999 16648 engine.cpp:57] step roi return -1
+I0105 18:33:08.874 23896 dll_project.cpp:21] start execute project in API
+D0105 18:33:08.874 23896 project.cpp:27] working directory: 0x26e5a9c06e0
+I0105 18:33:08.874 23896 project.cpp:30] project path: d:\code\c\gdextension_test\test\test_file\s1891.xml
+D0105 18:33:08.874 23896 project.cpp:87] input: std::string	sourceType
+W0105 18:33:08.874 23896 project.cpp:106] no serializer defined for input: sourceType
+D0105 18:33:08.874 23896 project.cpp:87] input: std::string	path
+W0105 18:33:08.874 23896 project.cpp:106] no serializer defined for input: path
+D0105 18:33:08.874 23896 project.cpp:87] input: rectangle	roi
+D0105 18:33:08.874 23896 project.cpp:87] input: reference	image
+D0105 18:33:08.874 23896 project.cpp:87] input: double	minRadius
+D0105 18:33:08.874 23896 project.cpp:87] input: double	path
+D0105 18:33:08.874 23896 project.cpp:87] input: reference	image
+D0105 18:33:08.874 23896 project.cpp:87] input: line_caliper	caliper
+I0105 18:33:08.874 23896 md_line_finder.cpp:56] deserialize line calliper config
+D0105 18:33:08.874 23896 project.cpp:87] input: double	minLength
+D0105 18:33:08.874 23896 project.cpp:87] input: boolean	drawResult
+D0105 18:33:08.874 23896 project.cpp:87] input: reference	image
+D0105 18:33:08.874 23896 project.cpp:87] input: line_caliper	caliper
+I0105 18:33:08.874 23896 md_line_finder.cpp:56] deserialize line calliper config
+D0105 18:33:08.874 23896 project.cpp:87] input: double	minLength
+D0105 18:33:08.874 23896 project.cpp:87] input: boolean	drawResult
+D0105 18:33:08.874 23896 project.cpp:87] input: reference	image
+D0105 18:33:08.874 23896 project.cpp:87] input: line_caliper	caliper
+I0105 18:33:08.874 23896 md_line_finder.cpp:56] deserialize line calliper config
+D0105 18:33:08.874 23896 project.cpp:87] input: double	minLength
+D0105 18:33:08.874 23896 project.cpp:87] input: boolean	drawResult
+D0105 18:33:08.874 23896 project.cpp:87] input: reference	image
+D0105 18:33:08.874 23896 project.cpp:87] input: line_caliper	caliper
+I0105 18:33:08.874 23896 md_line_finder.cpp:56] deserialize line calliper config
+D0105 18:33:08.874 23896 project.cpp:87] input: double	minLength
+D0105 18:33:08.874 23896 project.cpp:87] input: boolean	drawResult
+D0105 18:33:08.874 23896 project.cpp:87] input: reference	image
+I0105 18:33:08.874 23896 project.cpp:193] root step is: 本地图片
+D0105 18:33:08.874 23896 engine.cpp:172] step id is empty, execute root step
+D0105 18:33:08.874 11160 engine.cpp:136] execute step asynchronized	imageSource	本地图片
+D0105 18:33:08.874 11160 module.cpp:134] input param class name: class InputParam, step id: imageSource
+D0105 18:33:08.874 11160 module.cpp:134] input param class name: class InputParam, step id: imageSource
+I0105 18:33:08.874 11160 module.cpp:150] execute step: 本地图片
+I0105 18:33:08.874 11160 md_image_source.cpp:46] execute MdImageSource
+I0105 18:33:08.874 11160 md_image_source.cpp:47] sourceType: file, path: test_file/s1981-2.png
+I0105 18:33:09.388 11160 md_image_source.cpp:59] image file info: cols 5480, rows 3648, channels 3
+D0105 18:33:09.388 11160 engine.cpp:148] event signaled
+D0105 18:33:09.388 6224 engine.cpp:54] step executed signal received, done task count: 2
+I0105 18:33:09.388 6224 engine.cpp:57] step imageSource return 0
+D0105 18:33:09.388 6224 engine.cpp:54] step executed signal received, done task count: 1
+I0105 18:33:09.388 6224 engine.cpp:57] step imageSource return 0
+D0105 18:33:09.388 9744 engine.cpp:132] step is already been running: roi
+D0105 18:33:09.388 21192 engine.cpp:136] execute step asynchronized	roi	根据POI切图
+D0105 18:33:09.388 21192 module.cpp:134] input param class name: class RectangleParam, step id: roi
+D0105 18:33:09.388 21192 module.cpp:134] input param class name: class ReferenceParam, step id: roi
+I0105 18:33:09.388 21192 module.cpp:150] execute step: 根据POI切图
+I0105 18:33:09.388 21192 md_roi.cpp:25] execute ROI
+I0105 18:33:09.388 21192 md_roi.cpp:41] image file info in POI: cols 5480, rows 3648, channels 3
+D0105 18:33:09.388 21192 md_roi.cpp:52] roi type: class RectangleParam
+I0105 18:33:09.388 21192 md_roi.cpp:58] Rectangle ROI: start: 2140,1790  ->  2640, 1790
+D0105 18:33:09.388 21192 engine.cpp:148] event signaled
+D0105 18:33:09.388 6224 engine.cpp:54] step executed signal received, done task count: 2
+I0105 18:33:09.388 6224 engine.cpp:57] step roi return 0
+D0105 18:33:09.388 6224 engine.cpp:54] step executed signal received, done task count: 1
+I0105 18:33:09.388 6224 engine.cpp:57] step roi return 0
+D0105 18:33:09.388 7972 engine.cpp:136] execute step asynchronized	topLineFinder	找上边线
+D0105 18:33:09.388 21380 engine.cpp:132] step is already been running: rightLineFinder
+D0105 18:33:09.388 25676 engine.cpp:132] step is already been running: leftLineFinder
+D0105 18:33:09.388 27260 engine.cpp:136] execute step asynchronized	rightLineFinder	找右边线
+D0105 18:33:09.388 18568 engine.cpp:132] step is already been running: bottomLineFinder
+D0105 18:33:09.388 19200 engine.cpp:132] step is already been running: circleFinder
+D0105 18:33:09.388 4764 engine.cpp:132] step is already been running: topLineFinder
+D0105 18:33:09.388 3440 engine.cpp:136] execute step asynchronized	circleFinder	找圆
+D0105 18:33:09.388 3440 module.cpp:134] input param class name: class InputParam, step id: circleFinder
+D0105 18:33:09.388 3440 module.cpp:134] input param class name: class InputParam, step id: circleFinder
+D0105 18:33:09.388 3440 module.cpp:134] input param class name: class ReferenceParam, step id: circleFinder
+D0105 18:33:09.388 28096 engine.cpp:136] execute step asynchronized	leftLineFinder	找下边线
+I0105 18:33:09.388 3440 module.cpp:150] execute step: 找圆
+I0105 18:33:09.388 3440 md_circle_finder.cpp:18] execute circleFinder
+D0105 18:33:09.388 3440 engine.cpp:148] event signaled
+D0105 18:33:09.388 1316 engine.cpp:136] execute step asynchronized	bottomLineFinder	找下边线
+D0105 18:33:09.388 6224 engine.cpp:54] step executed signal received, done task count: 2
+I0105 18:33:09.388 6224 engine.cpp:57] step circleFinder return 0
+D0105 18:33:09.388 6224 engine.cpp:66] no poststeps to be executed, stop at step: circleFinder
+D0105 18:33:09.388 6224 engine.cpp:54] step executed signal received, done task count: 1
+I0105 18:33:09.388 6224 engine.cpp:57] step circleFinder return 0
+D0105 18:33:09.388 6224 engine.cpp:66] no poststeps to be executed, stop at step: circleFinder
+D0105 18:33:09.388 7972 module.cpp:134] input param class name: class LineCaliperParam, step id: topLineFinder
+D0105 18:33:09.388 7972 module.cpp:134] input param class name: class InputParam, step id: topLineFinder
+D0105 18:33:09.388 7972 module.cpp:134] input param class name: class InputParam, step id: topLineFinder
+D0105 18:33:09.388 7972 module.cpp:134] input param class name: class ReferenceParam, step id: topLineFinder
+I0105 18:33:09.388 7972 module.cpp:150] execute step: 找上边线
+D0105 18:33:09.388 1316 module.cpp:134] input param class name: class LineCaliperParam, step id: bottomLineFinder
+D0105 18:33:09.388 1316 module.cpp:134] input param class name: class InputParam, step id: bottomLineFinder
+D0105 18:33:09.388 1316 module.cpp:134] input param class name: class InputParam, step id: bottomLineFinder
+D0105 18:33:09.388 1316 module.cpp:134] input param class name: class ReferenceParam, step id: bottomLineFinder
+I0105 18:33:09.388 1316 module.cpp:150] execute step: 找下边线
+D0105 18:33:09.388 27260 module.cpp:134] input param class name: class LineCaliperParam, step id: rightLineFinder
+D0105 18:33:09.388 27260 module.cpp:134] input param class name: class InputParam, step id: rightLineFinder
+D0105 18:33:09.388 27260 module.cpp:134] input param class name: class InputParam, step id: rightLineFinder
+D0105 18:33:09.388 27260 module.cpp:134] input param class name: class ReferenceParam, step id: rightLineFinder
+I0105 18:33:09.388 27260 module.cpp:150] execute step: 找右边线
+D0105 18:33:09.388 28096 module.cpp:134] input param class name: class LineCaliperParam, step id: leftLineFinder
+D0105 18:33:09.388 28096 module.cpp:134] input param class name: class InputParam, step id: leftLineFinder
+D0105 18:33:09.388 28096 module.cpp:134] input param class name: class InputParam, step id: leftLineFinder
+D0105 18:33:09.388 28096 module.cpp:134] input param class name: class ReferenceParam, step id: leftLineFinder
+I0105 18:33:09.388 28096 module.cpp:150] execute step: 找下边线
+I0105 18:33:09.517 7972 md_line_finder.cpp:487] line angle: -0.797942, start: (2060, 579), end: (2760, 569)
+I0105 18:33:09.517 1316 md_line_finder.cpp:487] line angle: -0.689242, start: (2050, 2997), end: (2787, 2988)
+I0105 18:33:09.517 28096 md_line_finder.cpp:487] line angle: 89.384209, start: (1200, -216), end: (1200, -216)
+I0105 18:33:09.517 27260 md_line_finder.cpp:487] line angle: 89.162156, start: (3620, 2793), end: (3620, 2793)

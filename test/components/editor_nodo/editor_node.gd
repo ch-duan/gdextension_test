@@ -5,7 +5,7 @@ extends Node
 @export var node_title: String:
  set = set_title
 
-@onready var tips: Label = get_node("VBoxContainer/Label")
+@onready var tips: Label = $"VBoxContainer/Label"
 
 func set_title(new_title):
   node_title = new_title

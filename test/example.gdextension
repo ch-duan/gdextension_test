@@ -5,4 +5,4 @@ compatibility_minimum = "4.2"
 
 [libraries]
 
-windows.debug.x86_64 = "res://bin/libTopiot_ai.windows.template_debug.x86_64.dll"
+windows.debug.x86_64 = "res://lib/libtopiot_ai.dll"

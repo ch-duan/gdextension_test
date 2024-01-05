@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project id="1" name="s389" schema_version="1.0" crt= "2023-02-14 08:00:00" lut="2023-02-14 10:00:00">
+  <steps>
+    <step id="imageSource" module_id="imageSource" name="图像源" number_in_project="1" number_in_module="1">
+      <inputs>
+        <std::string name="sourceType" value="file"/>
+        <std::string name="path" value="../../../../src/s1981-2.png"/>
+      </inputs>
+      <outputs>
+        <mat name="image"/>
+      </outputs>
+      <links>
+        <link direction="out" target="conditionDetection"/>
+      </links>
+    </step>
+    <step id="conditionDetection" module_id="conditionDetection" name="条件检测" number_in_project="2" number_in_module="1">
+      <inputs>
+        <std::string name="condition" value="and"/>
+        <!-- <conditions name="conditions"> -->
+        <condition name="widthCondition" key="width" type="int" minVal="5479" maxVal="5481" />
+        <condition name="heightCondition" key="height" type="double" minVal="3647.0" maxVal="3649.0" />
+        <!-- </conditions>  -->
+        <reference name="image" ref_step="imageSource" ref_section="output" ref_name="image"/>
+      </inputs>
+      <outputs>
+        <mat name="roiImage"/>
+      </outputs>
+      <links>
+        <link direction="in" target="imageSource"/>
+      </links>
+    </step>
+  </steps>
+</project>
