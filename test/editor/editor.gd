@@ -8,8 +8,6 @@ func test(projectID: String, stepID: String, result: String):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-  for n in $"%left".get_children():
-    print(n.name)
   var s = Topiot_ai.new()
   s.topiot_ai_excute_result.connect(test.bind())
   s.test_aaa()
