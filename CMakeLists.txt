@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.6)
 project(topiot_ai)
 
-set(GODOT_GDEXTENSION_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/godot-cpp/gdextension CACHE STRING "Path to GDExtension interface header directory")
-set(CPP_BINDINGS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/lib/godot-cpp CACHE STRING "Path to C++ bindings")
+# set(GODOT_GDEXTENSION_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/godot-cpp/gdextension CACHE STRING "Path to GDExtension interface header directory")
+# set(CPP_BINDINGS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/lib/godot-cpp CACHE STRING "Path to C++ bindings")
 set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "") # works
@@ -36,7 +36,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(GODOT_COMPILE_FLAGS)
 set(GODOT_LINKER_FLAGS)
-
+set(links)
 set(inc)
 
 option(USE_OPENCV "Use OpenCV" ON)
@@ -97,44 +97,41 @@ file(GLOB_RECURSE SOURCES src/*.c**)
 file(GLOB_RECURSE HEADERS include/*.h**)
 list(APPEND HEADERS lib/dll_project.h)
 
-add_subdirectory(lib/godot-cpp)
+# add_subdirectory(lib/godot-cpp)
 
 # add_custom_target(generate_sources ALL COMMAND generator ${CMAKE_CURRENT_SOURCE_DIR}/lib/godot-cpp)
 if(USE_OPENCV)
-  include_directories($ENV{OPENCV_PATH}/build/include)
-  set(OPENCV_LIB_DIR $ENV{OPENCV_PATH}/build/x64/vc16/lib)
+  set(OPENCV_LIB_DIR $ENV{OPENCV_PATH}/install/x64/mingw/lib)
+  find_package(OpenCV REQUIRED PATHS $ENV{OPENCV_PATH}/install NO_DEFAULT_PATH)
+  set(OPENCV_DLL_DIR $ENV{OPENCV_PATH}/install/x64/mingw/bin/)
+  string(REPLACE "\\" "/" OPENCV_DLL_DIR ${OPENCV_DLL_DIR})
+  list(APPEND inc $ENV{OPENCV_PATH}/install/include)
   message(STATUS "OPENCV_LIB_DIR: ${OPENCV_LIB_DIR}")
+  message(STATUS "OpenCV_LIBS: ${OpenCV_LIBS}")
 
-  if(CMAKE_BUILD_TYPE STREQUAL "Release")
-    find_library(opencv_lib opencv_world490 ${OPENCV_LIB_DIR})
-  endif()
-
-  if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    find_library(opencv_lib opencv_world490d ${OPENCV_LIB_DIR})
-  endif()
-
-  list(APPEND inc $ENV{OPENCV_PATH}/build/include)
-  list(APPEND links ${opencv_lib})
+  list(APPEND links ${OpenCV_LIBS})
+  list(APPEND links_dir $ENV{OPENCV_PATH}/install/x64/mingw/bin)
+  list(APPEND links_dir ${OPENCV_LIB_DIR})
 endif()
+
+set(godot_cpp_DIR $ENV{GODOT_CPP_4_2_1})
+message(STATUS "godot_cpp_DIR is ${godot_cpp_DIR}")
 
 # Define our godot-cpp library
 add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADERS})
-add_dependencies(${PROJECT_NAME} godot-cpp)
 
+# add_dependencies(${PROJECT_NAME} godot-cpp)
 message(STATUS "inc: ${inc}")
 
 target_include_directories(${PROJECT_NAME}
   PUBLIC
-  ${CPP_BINDINGS_PATH}/include
-  ${CPP_BINDINGS_PATH}/gen/include
-  ${CMAKE_CURRENT_SOURCE_DIR}/build/lib/godot-cpp/gen/include
-  ${GODOT_GDEXTENSION_DIR}
+  ${godot_cpp_DIR}/gen/include
+  ${godot_cpp_DIR}/include
+  ${godot_cpp_DIR}/gdextension
   lib
   src
   ${inc}
 )
-
-set(links)
 
 list(APPEND links TopAIEngine)
 
@@ -160,22 +157,21 @@ if(ANDROID)
   set(SYSTEM_NAME ${SYSTEM_NAME}.${ANDROID_ABI})
 endif()
 
-if(CMAKE_VERSION VERSION_GREATER "3.13")
-  target_link_directories(${PROJECT_NAME}
-    PRIVATE
-    ${CPP_BINDINGS_PATH}/bin/
-    ${CPP_BINDINGS_PATH}/build/bin/
-    ${CMAKE_CURRENT_SOURCE_DIR}/bin
-    lib
-  )
+target_link_directories(${PROJECT_NAME}
+  PRIVATE
+  ${godot_cpp_DIR}/lib/
+  ${links_dir}
+  lib
+)
 
+if(CMAKE_VERSION VERSION_GREATER "3.13")
   target_link_libraries(${PROJECT_NAME}
     godot-cpp.${SYSTEM_NAME}.${BUILD_TYPE}$<$<NOT:$<PLATFORM_ID:Android>>:.${BITS}>
     ${links}
   )
 else()
   target_link_libraries(${PROJECT_NAME}
-    ${CPP_BINDINGS_PATH}/bin/libgodot-cpp.${SYSTEM_NAME}.${BUILD_TYPE}$<$<NOT:$<PLATFORM_ID:Android>>:.${BITS}>.a
+    ${godot_cpp_DIR}/libgodot-cpp.${SYSTEM_NAME}.${BUILD_TYPE}$<$<NOT:$<PLATFORM_ID:Android>>:.${BITS}>.a
     ${links}
   )
 endif()
@@ -188,3 +184,4 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY OUTPUT_NAME "topiot_ai")
 
 install(TARGETS ${PROJECT_NAME} DESTINATION test/lib)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/lib/TopAIEngine.dll DESTINATION test/lib)
+install(DIRECTORY ${OPENCV_DLL_DIR} DESTINATION test/lib)
